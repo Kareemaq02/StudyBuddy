@@ -7,13 +7,12 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
     <Button
+            android:text="Sign Up"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send Data"
-            android:onClick="SendData"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_height="wrap_content" android:id="@+id/test"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintVertical_bias="0.806"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
