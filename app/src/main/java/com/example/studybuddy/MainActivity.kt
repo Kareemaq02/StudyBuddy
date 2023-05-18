@@ -1,28 +1,40 @@
 package com.example.studybuddy
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import com.example.studybuddy.auth.SignUpActivity
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.studybuddy.Activity.HomepageActivity
+import com.example.studybuddy.Activity.LoginActivity
+import com.example.studybuddy.auth.UserAuth
 
 class MainActivity : AppCompatActivity() {
-    val database = FirebaseDatabase.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val button = findViewById<Button>(R.id.test)
-        button.setOnClickListener{
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
+
+        // Check if the user is logged in
+        UserAuth.isLoggedIn(contentResolver) { isLoggedIn ->
+            if (isLoggedIn) {
+                // User is already logged in, navigate to the home screen or main app screen
+                navigateToHome()
+            } else {
+                // User is not logged in, navigate to the login screen
+                navigateToLogin()
+            }
         }
     }
 
+    private fun navigateToHome() {
+        // TODO: Implement navigation to the home screen or main app screen
+        val intent = Intent(this, HomepageActivity::class.java)
+        startActivity(intent)
+        finish()
 
+    }
 
-
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }
