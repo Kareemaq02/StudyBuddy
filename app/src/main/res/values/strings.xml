@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">studybuddy</string>
+    <string-array name="spinner_items">
+        <item>Computer Science</item>
+        <item>Computer Engineering</item>
+    </string-array>
 </resources>

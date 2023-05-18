@@ -3,8 +3,8 @@
 package com.example.studybuddy.Activity
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.studybuddy.R
 import com.example.studybuddy.data.User
@@ -19,6 +19,7 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+
         val signupButton = findViewById<Button>(R.id.signupButton)
         signupButton.setOnClickListener {
             // Call the signup function and insert an example user
@@ -26,43 +27,72 @@ class SignUpActivity : AppCompatActivity() {
         }
 
 
-        // Code for signup functionality
-        val database = FirebaseDatabase.getInstance()
-        val usersRef = database.getReference("users")
-        val userData = User("example@example.com", "password123", "John", "Doe", "Computer Science")
-        val newUserRef = usersRef.push()
-        newUserRef.setValue(userData)
+        // Co
+
+
+
+        //code for Spinner
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        val items = arrayOf("Computer Science", "Computer Engineering")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedItem = items[position]
+                Toast.makeText(this@SignUpActivity, "Selected Item: $selectedItem", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+
 
         // Other signup-related code, such as UI interactions and user input handling
         // ...
+
+
+
     }
     private fun signup() {
-        val email = "example@example.com" // Replace with the actual email input
-        val password = "password123" // Replace with the actual password input
+        val email = getEmailFromInput() // Replace with the actual email input
+        val password = getPasswordFromInput() // Replace with the actual password input
+        val confirmPassword = getConfirmPasswordFromInput()
+        val selectedSpinnerItem = getSelectedSpinnerItem()
+        val firstName = getFirstNameFromInput()
+        val lastName = getLastNameFromInput()
+
+
 
         // Check if the email is already registered
-        if(isValidEmail(email)) {
-            isEmailAlreadyRegistered(email) { isRegistered ->
-                if (isRegistered) {
-                    // Email is already registered, display an error message or handle the case
-                    // For example, show a Toast message
-                    Toast.makeText(this, "Email is already registered", Toast.LENGTH_SHORT).show()
-                } else {
-                    // Email is not registered, proceed with the signup process
-                    val database = FirebaseDatabase.getInstance()
-                    val usersRef = database.getReference("users")
-                    val userData = User(email, password, "John", "Doe", "Computer Science")
-                    val newUserRef = usersRef.push()
-                    newUserRef.setValue(userData)
+        if (isValidEmail(email)) {
+            if (password == confirmPassword) {
+                isEmailAlreadyRegistered(email) { isRegistered ->
+                    if (isRegistered) {
+                        // Email is already registered, display an error message or handle the case
+                        // For example, show a Toast message
+                        Toast.makeText(this, "Email is already registered", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Email is not registered, proceed with the signup process
+                        val database = FirebaseDatabase.getInstance()
+                        val usersRef = database.getReference("users")
+                        val userData = User(email, password, firstName, lastName, selectedSpinnerItem)
+                        val newUserRef = usersRef.push()
+                        newUserRef.setValue(userData)
+                        // Show a success message or navigate to the next screen
+                        // For example, show a Toast message and go back to the login screen
 
-                    // Show a success message or navigate to the next screen
-                    // For example, show a Toast message and go back to the login screen
-                    Toast.makeText(this, "Signup successful", Toast.LENGTH_SHORT).show()
-                    finish() // Finish the signup activity and go back to the login activity
+                        Toast.makeText(this, "Signup successful", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
                 }
+            } else {
+                Toast.makeText(this, "Password and confirm password do not match", Toast.LENGTH_SHORT).show()
             }
+        } else {
+            Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show()
         }
-        //TODO Else
     }
 
     private fun isEmailAlreadyRegistered(email: String, callback: (Boolean) -> Unit) {
@@ -87,8 +117,35 @@ class SignUpActivity : AppCompatActivity() {
         val pattern = Regex("^[A-Za-z0-9.]+@gju\\.edu\\.jo$")
         return pattern.matches(email)
     }
+    private fun getEmailFromInput(): String {
+        val emailEditText = findViewById<EditText>(R.id.PersonalEmail)
+        return emailEditText.text.toString().trim()
+    }
 
+    private fun getPasswordFromInput(): String {
+        val passwordEditText = findViewById<EditText>(R.id.PersonalPassword)
+        return passwordEditText.text.toString()
+    }
+    private fun getSelectedSpinnerItem(): String {
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        return spinner.selectedItem as String
+    }
+    private fun getFirstNameFromInput(): String {
+        val firstNameEditText = findViewById<EditText>(R.id.FirstName)
+        return firstNameEditText.text.toString().trim()
+    }
+
+    private fun getLastNameFromInput(): String {
+        val lastNameEditText = findViewById<EditText>(R.id.LastName)
+        return lastNameEditText.text.toString().trim()
+    }
+    private fun getConfirmPasswordFromInput(): String {
+        val confirmPasswordEditText = findViewById<EditText>(R.id.ConfirmPersonalPassword)
+        return confirmPasswordEditText.text.toString()
+    }
 
     // Other methods and functions related to signup functionality
     // ...
+
+
 }
