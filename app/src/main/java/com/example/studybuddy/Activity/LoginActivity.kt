@@ -33,6 +33,10 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
             }
         }
+        val signUpButton: Button = findViewById(R.id.signupButton)
+        signUpButton.setOnClickListener {
+            navigateToSignUpActivity()
+        }
     }
 
     private fun validateCredentials(email: String, password: String): Boolean {
@@ -91,6 +95,10 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+    private fun navigateToSignUpActivity() {
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
     }
 
 }
