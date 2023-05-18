@@ -1,16 +1,16 @@
 // Inside SignupActivity.kt
 
-package com.example.studybuddy.auth
+package com.example.studybuddy.Activity
 
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.FirebaseDatabase
-import com.example.studybuddy.data.User
 import com.example.studybuddy.R
+import com.example.studybuddy.data.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
