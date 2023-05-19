@@ -43,7 +43,6 @@ object AdminAuth {
                         }
                     }
                 } else {
-                    println("No records found for email: $email")
                     callback.invoke(false)
                 }
 

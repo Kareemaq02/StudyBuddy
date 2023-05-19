@@ -4,12 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.studybuddy.Activity.AdminHomepageActivity
-import com.example.studybuddy.Activity.HomepageActivity
 import com.example.studybuddy.Activity.LoginActivity
 import com.example.studybuddy.Activity.UserHomePageActivity
 import com.example.studybuddy.auth.AdminAuth
 import com.example.studybuddy.auth.UserAuth
-import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 

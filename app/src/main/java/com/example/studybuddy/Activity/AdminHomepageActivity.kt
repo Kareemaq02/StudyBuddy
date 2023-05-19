@@ -13,7 +13,7 @@ import com.example.studybuddy.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class HomepageActivity : AppCompatActivity() {
+class AdminHomepageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
