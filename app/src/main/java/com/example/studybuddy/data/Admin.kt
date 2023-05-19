@@ -1,6 +1,6 @@
 package com.example.studybuddy.data
 
 class Admin (
-    val username: String,
+    val email: String,
     val password: String
     )
