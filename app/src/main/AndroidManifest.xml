@@ -33,8 +33,16 @@
         </activity>
 
         <activity
-                android:name=".Activity.HomepageActivity"
+                android:name=".Activity.AdminHomepageActivity"
                 android:label="HomepageActivity">
+        </activity>
+
+        <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
+
+
+        <activity
+                android:name=".Activity.UserHomePageActivity"
+                android:label="UserHomePage">
         </activity>
 
     </application>
