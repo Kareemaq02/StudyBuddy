@@ -29,9 +29,9 @@ class AdminHomepageActivity : AppCompatActivity() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             // Set the text or icon for each tab
             when (position) {
-                0 -> tab.setIcon(R.drawable.readingbook)
-                1 -> tab.setIcon(R.drawable.mortarboard)
-                2 -> tab.setIcon(R.drawable.settings)
+                0 -> tab.setIcon(R.drawable.graduate_cap)
+                1 -> tab.setIcon(R.drawable.reading_book)
+                2 -> tab.setIcon(R.drawable.settings__2_)
             }
         }.attach()
 
