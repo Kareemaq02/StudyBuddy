@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
                         }
 
                         // Navigate to the home screen or main app screen
-                        val intent = Intent(this@LoginActivity, HomepageActivity::class.java)
+                        val intent = Intent(this@LoginActivity, UserHomePageActivity::class.java)
                         startActivity(intent)
                         finish()
                     }

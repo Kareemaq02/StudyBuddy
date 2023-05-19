@@ -5,12 +5,16 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.studybuddy.Activity.HomepageActivity
 import com.example.studybuddy.Activity.LoginActivity
+import com.example.studybuddy.Activity.UserHomePageActivity
+
 import com.example.studybuddy.auth.UserAuth
+import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         // Check if the user is logged in
         UserAuth.isLoggedIn(contentResolver) { isLoggedIn ->
@@ -22,11 +26,12 @@ class MainActivity : AppCompatActivity() {
                 navigateToLogin()
             }
         }
+
     }
 
     private fun navigateToHome() {
         // TODO: Implement navigation to the home screen or main app screen
-        val intent = Intent(this, HomepageActivity::class.java)
+        val intent = Intent(this, UserHomePageActivity::class.java)
         startActivity(intent)
         finish()
 
