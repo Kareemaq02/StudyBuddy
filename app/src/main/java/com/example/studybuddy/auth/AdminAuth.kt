@@ -3,11 +3,11 @@ import android.content.ContentResolver
 import android.provider.Settings
 import com.google.firebase.database.*
 
+object AdminAuth {
 
-object UserAuth {
 
 
-    fun isLoggedIn(contentResolver: ContentResolver, callback: (Boolean) -> Unit) {
+    fun isLoggedInAdmin(contentResolver: ContentResolver, callback: (Boolean) -> Unit) {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val collectionRef: DatabaseReference = database.getReference("Sessions")
         val deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
@@ -28,19 +28,15 @@ object UserAuth {
 
 
     fun login(email: String, password: String, callback: (Boolean) -> Unit) {
-        println("asd1");
-        val usersRef = FirebaseDatabase.getInstance().getReference("users")
+        val usersRef = FirebaseDatabase.getInstance().getReference("admin")
         usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                println("asd2");
                 if (dataSnapshot.exists()) {
-                    println("asd3");
                     for (childSnapshot in dataSnapshot.children) {
-                        println("asd4");
-                        val userEmail = childSnapshot.child("email").getValue(String::class.java)
-                        val userPassword = childSnapshot.child("password").getValue(String::class.java)
+                        val adminEmail = childSnapshot.child("email").getValue(String::class.java)
+                        val adminPassword = childSnapshot.child("password").getValue(String::class.java)
 
-                        if (userPassword.equals(password)&&userEmail.equals(email)) {
+                        if (adminPassword.equals(password)&&adminEmail.equals(email)) {
                             // Match found: email and password are correct
                             callback.invoke(true)
                             return
@@ -63,5 +59,12 @@ object UserAuth {
                 callback.invoke(false)
             }
         })
+    }
+
+
+
+    fun logout() {
+        // Clear the loggedInUser to indicate that the user is logged out
+
     }
 }

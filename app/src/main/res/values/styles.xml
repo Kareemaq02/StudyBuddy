@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="UnderlinedTextView" parent="TextAppearance.AppCompat">
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+</resources>
