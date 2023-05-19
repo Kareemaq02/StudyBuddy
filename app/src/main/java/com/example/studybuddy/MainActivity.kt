@@ -6,19 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.studybuddy.Activity.AdminHomepageActivity
 import com.example.studybuddy.Activity.HomepageActivity
 import com.example.studybuddy.Activity.LoginActivity
+import com.example.studybuddy.Activity.UserHomePageActivity
 import com.example.studybuddy.auth.AdminAuth
 import com.example.studybuddy.auth.UserAuth
+import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-      //  val database = FirebaseDatabase.getInstance()
-     //   val usersRef = database.getReference("users")
-      //  val userData = User("example@example.com", "password123", "firstName", "lastName", "selectedSpinnerItem")
-      //  val newUserRef = usersRef.push()
-      //  newUserRef.setValue(userData)
+
         // Check if the user is logged in
         UserAuth.isLoggedIn(contentResolver) { isLoggedIn ->
             if (isLoggedIn) {
@@ -38,11 +36,12 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+
     }
 
     private fun navigateToHome() {
         // TODO: Implement navigation to the home screen or main app screen
-        val intent = Intent(this, HomepageActivity::class.java)
+        val intent = Intent(this, UserHomePageActivity::class.java)
         startActivity(intent)
         finish()
 

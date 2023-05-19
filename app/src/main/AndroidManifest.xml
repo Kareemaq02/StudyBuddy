@@ -37,6 +37,11 @@
                 android:label="HomepageActivity">
         </activity>
 
+        <activity
+                android:name=".Activity.UserHomePageActivity"
+                android:label="UserHomePage">
+        </activity>
+
     </application>
 
 </manifest>

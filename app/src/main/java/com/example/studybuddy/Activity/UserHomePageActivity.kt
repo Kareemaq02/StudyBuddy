@@ -6,35 +6,35 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.example.studybuddy.Fragments.CourseFragment
-import com.example.studybuddy.Fragments.HomeFragment
-import com.example.studybuddy.Fragments.SettingFragment
 import com.example.studybuddy.R
+import com.example.studybuddy.UserFragments.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class HomepageActivity : AppCompatActivity() {
-
+class UserHomePageActivity : AppCompatActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_homepage)
+        setContentView(R.layout.activity_userhomepage)
 
-        val viewPager: ViewPager2 = findViewById(R.id.viewPager)
+        val viewPager: ViewPager2 = findViewById(R.id.viewPagerUser)
         val fragmentAdapter = MyPagerAdapter(this)
-        fragmentAdapter.addFragment(HomeFragment())
-        fragmentAdapter.addFragment(CourseFragment())
-        fragmentAdapter.addFragment(SettingFragment())
+        fragmentAdapter.addFragment(UserDashboardFragment())
+        fragmentAdapter.addFragment(UserSemestersManagerFragment())
+        fragmentAdapter.addFragment(UserRequestFragment())
+        fragmentAdapter.addFragment(UserEnrolledLessonsFragment())
+        fragmentAdapter.addFragment(UserSettingsFragment())
         viewPager.adapter = fragmentAdapter
-        val tabLayout: TabLayout = findViewById(R.id.tabLayout)
+        val tabLayout: TabLayout = findViewById(R.id.tabLayoutUser)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             // Set the text or icon for each tab
             when (position) {
                 0 -> tab.setIcon(R.drawable.readingbook)
                 1 -> tab.setIcon(R.drawable.mortarboard)
                 2 -> tab.setIcon(R.drawable.settings)
+                3 -> tab.setIcon(R.drawable.mortarboard)
+                4 -> tab.setIcon(R.drawable.settings)
             }
         }.attach()
-
     }
 
     private class MyPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
@@ -53,4 +53,5 @@ class HomepageActivity : AppCompatActivity() {
             return fragments[position]
         }
     }
+
 }
