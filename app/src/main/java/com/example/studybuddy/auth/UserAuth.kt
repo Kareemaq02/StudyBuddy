@@ -15,7 +15,14 @@ object UserAuth {
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val isLoggedIn = dataSnapshot.exists()
+                var isLoggedIn = dataSnapshot.exists()
+                for (snapshot in dataSnapshot.children) {
+                    val isAdmin = snapshot.child("admin").getValue(Boolean::class.java)
+                    if (isAdmin == true) {
+                        isLoggedIn = false
+                        break
+                    }
+                }
                 callback.invoke(isLoggedIn)
             }
 
@@ -27,16 +34,13 @@ object UserAuth {
     }
 
 
+
     fun login(email: String, password: String, callback: (Boolean) -> Unit) {
-        println("asd1");
         val usersRef = FirebaseDatabase.getInstance().getReference("users")
         usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                println("asd2");
                 if (dataSnapshot.exists()) {
-                    println("asd3");
                     for (childSnapshot in dataSnapshot.children) {
-                        println("asd4");
                         val userEmail = childSnapshot.child("email").getValue(String::class.java)
                         val userPassword = childSnapshot.child("password").getValue(String::class.java)
 
