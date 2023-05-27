@@ -5,5 +5,11 @@
         <item name="android:textStyle">bold|italic</item>
         <item name="android:textColor">@color/blue</item>
     </style>
+    <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/purple_500</item>
+        <item name="tabIndicatorHeight">4dp</item>
+        <!-- Add more attributes as needed -->
+    </style>
+
 
 </resources>

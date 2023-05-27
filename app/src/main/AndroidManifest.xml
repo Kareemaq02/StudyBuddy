@@ -44,6 +44,10 @@
                 android:name=".Activity.UserHomePageActivity"
                 android:label="UserHomePage">
         </activity>
+        <activity
+                android:name=".Fragments.StudyPlanFragment"
+                android:label="StudyPlanFragment">
+        </activity>
 
     </application>
 
