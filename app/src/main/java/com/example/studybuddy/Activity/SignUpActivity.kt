@@ -2,10 +2,13 @@
 
 package com.example.studybuddy.Activity
 
-import SemesterInfo
+import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
+import android.view.Gravity
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.studybuddy.R
 import com.example.studybuddy.data.User
@@ -31,7 +34,6 @@ class SignUpActivity : AppCompatActivity() {
         // Co
 
 
-
         //code for Spinner
         val spinner = findViewById<Spinner>(R.id.spinner)
         val items = arrayOf("Computer Science", "Computer Engineering")
@@ -54,8 +56,8 @@ class SignUpActivity : AppCompatActivity() {
         // ...
 
 
-
     }
+
     private fun signup() {
         val email = getEmailFromInput() // Replace with the actual email input
         val password = getPasswordFromInput() // Replace with the actual password input
@@ -64,30 +66,48 @@ class SignUpActivity : AppCompatActivity() {
         val firstName = getFirstNameFromInput()
         val lastName = getLastNameFromInput()
 
-
         // Check if the email is already registered
         if (isValidEmail(email)) {
             if (password == confirmPassword) {
-                isEmailAlreadyRegistered(email) { isRegistered ->
-                    if (isRegistered) {
-                        // Email is already registered, display an error message or handle the case
-                        // For example, show a Toast message
-                        Toast.makeText(this, "Email is already registered", Toast.LENGTH_SHORT).show()
-                    } else {
-                        // Email is not registered, proceed with the signup process
-                        // database connection start
-                        val database = FirebaseDatabase.getInstance()
-                        val usersRef = database.getReference("users")
-                        val userData = User(email, password, firstName, lastName,selectedSpinnerItem)
-                        val newUserRef = usersRef.push()
-                        newUserRef.setValue(userData)
-                        // database connection end
-                        // Show a success message or navigate to the next screen
-                        // For example, show a Toast message and go back to the login screen
+                // Check if the password meets the criteria
+                val hasUppercase = password.any { it.isUpperCase() }
+                val hasSpecialChar = password.any { it.isLetterOrDigit().not() }
 
-                        Toast.makeText(this, "Signup successful", Toast.LENGTH_SHORT).show()
-                        finish()
+                if (hasUppercase && hasSpecialChar) {
+                    isEmailAlreadyRegistered(email) { isRegistered ->
+                        if (isRegistered) {
+                            // Email is already registered, display an error message or handle the case
+                            // For example, show a Toast message
+                            Toast.makeText(this, "Email is already registered", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Email is not registered, proceed with the signup process
+                            val database = FirebaseDatabase.getInstance()
+                            val usersRef = database.getReference("users")
+                            val userData = User(email, password, firstName, lastName, selectedSpinnerItem)
+                            val newUserRef = usersRef.push()
+                            newUserRef.setValue(userData)
+                            // Show a success message or navigate to the next screen
+                            // For example, show a Toast message and go back to the login screen
+
+                            Toast.makeText(this, "Signup successful", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
                     }
+                } else {
+                    // Display an error message if the password doesn't meet the criteria
+                    val errorMessage = "Password must contain at least one uppercase letter and one special character."
+                    val errorDialog = AlertDialog.Builder(this)
+                        .setTitle("Invalid Password")
+                        .setMessage(errorMessage)
+                        .setPositiveButton("OK") { dialog, which ->
+                            // Close the dialog
+                            dialog.dismiss()
+                        }
+                        .create()
+
+                    errorDialog.show()
                 }
             } else {
                 Toast.makeText(this, "Password and confirm password do not match", Toast.LENGTH_SHORT).show()
@@ -96,6 +116,7 @@ class SignUpActivity : AppCompatActivity() {
             Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun isEmailAlreadyRegistered(email: String, callback: (Boolean) -> Unit) {
         val usersRef = FirebaseDatabase.getInstance().getReference("users")
@@ -126,8 +147,55 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun getPasswordFromInput(): String {
         val passwordEditText = findViewById<EditText>(R.id.PersonalPassword)
-        return passwordEditText.text.toString()
+        val password = passwordEditText.text.toString()
+        val passwordSuggestions = generatePasswordSuggestions()
+
+
+
+
+        // Set the dialog window's gravity to display above the keyboard
+        val suggestionsDialog = AlertDialog.Builder(this)
+            .setTitle("Password Suggestions")
+            .setItems(generatePasswordSuggestions().toTypedArray()) { dialog, which ->
+                // Set the selected suggestion as the password
+                passwordEditText.setText(passwordSuggestions[which])
+            }
+            .setNegativeButton("Cancel") { dialog, which ->
+                // User clicked cancel, do nothing
+            }
+            .create()
+
+        // Set the long click listener to show the suggestions dialog
+        passwordEditText.setOnLongClickListener {
+            // Show the suggestions dialog
+            suggestionsDialog.show()
+            true // Consume the long click event
+        }
+
+        return password
     }
+
+
+    private fun generatePasswordSuggestions(): List<String> {
+        val passwordSuggestions = mutableListOf<String>()
+
+        // Define the set of special characters
+        val specialCharacters = listOf('!', '@', '#', '$', '%', '&', '*')
+
+        // Generate password suggestions based on the criteria
+        for (i in 0 until 5) { // Generate 5 suggestions
+            val uppercaseLetter = ('A'..'Z').random()
+            val specialCharacter = specialCharacters.random()
+            val lowercaseLetters = ('a'..'z').toList()
+            val password = listOf(uppercaseLetter, specialCharacter) +
+                    lowercaseLetters.shuffled().take(8) // Random lowercase letters
+
+            passwordSuggestions.add(password.joinToString(""))
+        }
+
+        return passwordSuggestions
+    }
+
     private fun getSelectedSpinnerItem(): String {
         val spinner = findViewById<Spinner>(R.id.spinner)
         return spinner.selectedItem as String
@@ -145,6 +213,14 @@ class SignUpActivity : AppCompatActivity() {
         val confirmPasswordEditText = findViewById<EditText>(R.id.ConfirmPersonalPassword)
         return confirmPasswordEditText.text.toString()
     }
+   /*
+    fun clearTextOnClick(view: View) {
+        if (view is EditText) {
+            view.text.clear()
+        }
+    }
+    */
+
 
     // Other methods and functions related to signup functionality
     // ...

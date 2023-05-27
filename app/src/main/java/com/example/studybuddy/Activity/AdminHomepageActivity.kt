@@ -1,19 +1,19 @@
 package com.example.studybuddy.Activity
 
+import CourseFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.example.studybuddy.Fragments.CourseFragment
 import com.example.studybuddy.Fragments.HomeFragment
 import com.example.studybuddy.Fragments.SettingFragment
 import com.example.studybuddy.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class HomepageActivity : AppCompatActivity() {
+class AdminHomepageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,17 +21,17 @@ class HomepageActivity : AppCompatActivity() {
 
         val viewPager: ViewPager2 = findViewById(R.id.viewPager)
         val fragmentAdapter = MyPagerAdapter(this)
-        fragmentAdapter.addFragment(HomeFragment())
         fragmentAdapter.addFragment(CourseFragment())
+        fragmentAdapter.addFragment(HomeFragment())
         fragmentAdapter.addFragment(SettingFragment())
         viewPager.adapter = fragmentAdapter
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             // Set the text or icon for each tab
             when (position) {
-                0 -> tab.setIcon(R.drawable.readingbook)
-                1 -> tab.setIcon(R.drawable.mortarboard)
-                2 -> tab.setIcon(R.drawable.settings)
+                0 -> tab.setIcon(R.drawable.graduate_cap)
+                1 -> tab.setIcon(R.drawable.reading_book)
+                2 -> tab.setIcon(R.drawable.settings__2_)
             }
         }.attach()
 

@@ -1,12 +1,11 @@
 package com.example.studybuddy.auth
 import android.content.ContentResolver
 import android.provider.Settings
-import com.example.studybuddy.data.User
 import com.google.firebase.database.*
 
 
 object UserAuth {
-    private var loggedInUser: User? = null
+
 
     fun isLoggedIn(contentResolver: ContentResolver, callback: (Boolean) -> Unit) {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -16,7 +15,14 @@ object UserAuth {
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val isLoggedIn = dataSnapshot.exists()
+                var isLoggedIn = dataSnapshot.exists()
+                for (snapshot in dataSnapshot.children) {
+                    val isAdmin = snapshot.child("admin").getValue(Boolean::class.java)
+                    if (isAdmin == true) {
+                        isLoggedIn = false
+                        break
+                    }
+                }
                 callback.invoke(isLoggedIn)
             }
 
@@ -28,21 +34,38 @@ object UserAuth {
     }
 
 
-    fun login(email: String, password: String, callback: (Boolean) -> Unit) {
-        // Perform the login process and authenticate the user
-        // Set the loggedInUser if login is successful
-        // Invoke the callback with the result (true for success, false for failure)
-        // You can replace the example implementation with your authentication logic
-        if (email == "example@example.com" && password == "password123") {
-            loggedInUser = User(email, password, "John", "Doe", "Computer Science")
-            callback.invoke(true)
-        } else {
-            callback.invoke(false)
-        }
-    }
 
-    fun logout() {
-        // Clear the loggedInUser to indicate that the user is logged out
-        loggedInUser = null
+    fun login(email: String, password: String, callback: (Boolean) -> Unit) {
+        val usersRef = FirebaseDatabase.getInstance().getReference("users")
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (childSnapshot in dataSnapshot.children) {
+                        val userEmail = childSnapshot.child("email").getValue(String::class.java)
+                        val userPassword = childSnapshot.child("password").getValue(String::class.java)
+
+                        if (userPassword.equals(password)&&userEmail.equals(email)) {
+                            // Match found: email and password are correct
+                            callback.invoke(true)
+                            return
+                        }
+                    }
+                } else {
+                    println("No records found for email: $email")
+                    callback.invoke(false)
+                }
+
+                // No match found: login failed
+
+            }
+
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Error occurred while querying the database
+                // Handle the error here
+                println("Database error: $databaseError")
+                callback.invoke(false)
+            }
+        })
     }
 }
