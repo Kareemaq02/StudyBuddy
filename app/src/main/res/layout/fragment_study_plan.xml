@@ -1,17 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <include layout="@layout/custom_actionbar_no_back"/>
+    <include layout="@layout/customactionbar"/>
     <!-- ListView -->
+
+    <!-- Floating Action Button -->
     <ListView
             android:id="@+id/studyplanListView"
             android:layout_width="match_parent"
-            android:layout_height="691dp"
+            android:layout_height="675dp"
             android:scrollbars="vertical"
-            android:layout_marginTop="40dp" android:layout_alignParentTop="true" android:layout_alignParentStart="true"
+            android:layout_marginTop="56dp" android:layout_alignParentTop="true" android:layout_alignParentStart="true"
             android:layout_marginStart="0dp"/>
-
-    <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addMajorButton"
             android:layout_width="66dp"
