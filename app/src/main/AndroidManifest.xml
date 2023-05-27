@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
+
             android:allowBackup="true"
             android:dataExtractionRules="@xml/data_extraction_rules"
             android:fullBackupContent="@xml/backup_rules"
@@ -14,7 +18,8 @@
 
         <activity
                 android:name=".MainActivity"
-                android:exported="true">
+                android:exported="true"
+                android:windowSoftInputMode="adjustPan">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -24,17 +29,23 @@
 
         <activity
                 android:name=".Activity.SignUpActivity"
-                android:label="SignupActivity">
+                android:label="SignupActivity"
+                android:windowSoftInputMode="adjustPan">
+
         </activity>
 
         <activity
                 android:name=".Activity.LoginActivity"
-                android:label="LoginActivity">
+                android:label="LoginActivity"
+                android:windowSoftInputMode="adjustPan">
+
         </activity>
 
         <activity
                 android:name=".Activity.AdminHomepageActivity"
-                android:label="HomepageActivity">
+                android:label="HomepageActivity"
+                android:windowSoftInputMode="adjustPan">
+
         </activity>
 
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
@@ -42,7 +53,8 @@
 
         <activity
                 android:name=".Activity.UserHomePageActivity"
-                android:label="UserHomePage">
+                android:label="UserHomePage"
+                android:windowSoftInputMode="adjustPan">
         </activity>
 
     </application>
