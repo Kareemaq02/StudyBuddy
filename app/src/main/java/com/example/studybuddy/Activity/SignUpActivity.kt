@@ -2,6 +2,7 @@
 
 package com.example.studybuddy.Activity
 
+import SemesterInfo
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -64,7 +65,6 @@ class SignUpActivity : AppCompatActivity() {
         val lastName = getLastNameFromInput()
 
 
-
         // Check if the email is already registered
         if (isValidEmail(email)) {
             if (password == confirmPassword) {
@@ -75,11 +75,13 @@ class SignUpActivity : AppCompatActivity() {
                         Toast.makeText(this, "Email is already registered", Toast.LENGTH_SHORT).show()
                     } else {
                         // Email is not registered, proceed with the signup process
+                        // database connection start
                         val database = FirebaseDatabase.getInstance()
                         val usersRef = database.getReference("users")
-                        val userData = User(email, password, firstName, lastName, selectedSpinnerItem)
+                        val userData = User(email, password, firstName, lastName,selectedSpinnerItem)
                         val newUserRef = usersRef.push()
                         newUserRef.setValue(userData)
+                        // database connection end
                         // Show a success message or navigate to the next screen
                         // For example, show a Toast message and go back to the login screen
 

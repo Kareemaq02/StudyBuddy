@@ -1,5 +1,7 @@
 package com.example.studybuddy.Activity
 
+import UserSemesters
+import UserSemestersManagerFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -8,6 +10,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.studybuddy.R
 import com.example.studybuddy.UserFragments.*
+
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -18,21 +21,23 @@ class UserHomePageActivity : AppCompatActivity()  {
 
         val viewPager: ViewPager2 = findViewById(R.id.viewPagerUser)
         val fragmentAdapter = MyPagerAdapter(this)
-        fragmentAdapter.addFragment(UserDashboardFragment())
         fragmentAdapter.addFragment(UserSemestersManagerFragment())
+        fragmentAdapter.addFragment(UserDashboardFragment())
         fragmentAdapter.addFragment(UserRequestFragment())
         fragmentAdapter.addFragment(UserEnrolledLessonsFragment())
         fragmentAdapter.addFragment(UserSettingsFragment())
+        fragmentAdapter.addFragment(UserSemesters())
         viewPager.adapter = fragmentAdapter
         val tabLayout: TabLayout = findViewById(R.id.tabLayoutUser)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             // Set the text or icon for each tab
             when (position) {
-                0 -> tab.setIcon(R.drawable.readingbook)
-                1 -> tab.setIcon(R.drawable.mortarboard)
-                2 -> tab.setIcon(R.drawable.settings)
-                3 -> tab.setIcon(R.drawable.mortarboard)
+                0 -> tab.setIcon(R.drawable.mortarboard)
+                1 -> tab.setIcon(R.drawable.readingbook)
+                2 -> tab.setIcon(R.drawable.readingbook)
+                3 -> tab.setIcon(R.drawable.readingbook)
                 4 -> tab.setIcon(R.drawable.settings)
+                5 -> tab.setIcon(R.drawable.mortarboard)
             }
         }.attach()
     }
