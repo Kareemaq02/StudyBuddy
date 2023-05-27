@@ -15,7 +15,15 @@ object AdminAuth {
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val isLoggedIn = dataSnapshot.exists()
+                var isLoggedIn = dataSnapshot.exists()
+                for (snapshot in dataSnapshot.children) {
+                    val isAdmin = snapshot.child("admin").getValue(Boolean::class.java)
+                    println(isAdmin)
+                    if (isAdmin == false) {
+                        isLoggedIn = false
+                        break
+                    }
+                }
                 callback.invoke(isLoggedIn)
             }
 
