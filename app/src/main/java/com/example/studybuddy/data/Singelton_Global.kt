@@ -1,5 +1,3 @@
-package com.example.studybuddy.data
-
 object GlobalData {
     var userEmail: String = ""
     var studyPlanId: String = ""

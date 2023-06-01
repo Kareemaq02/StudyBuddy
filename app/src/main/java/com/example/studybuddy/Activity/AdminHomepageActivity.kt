@@ -1,12 +1,12 @@
 package com.example.studybuddy.Activity
 
-import CourseFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.studybuddy.Fragments.CourseFragment
 import com.example.studybuddy.Fragments.HomeFragment
 import com.example.studybuddy.Fragments.SettingFragment
 import com.example.studybuddy.R
