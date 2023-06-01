@@ -1,6 +1,7 @@
 package com.example.studybuddy.auth
 import android.content.ContentResolver
 import android.provider.Settings
+import com.example.studybuddy.data.GlobalData
 import com.google.firebase.database.*
 
 
@@ -13,15 +14,27 @@ object UserAuth {
         val deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         val query = collectionRef.orderByChild("deviceId").equalTo(deviceId)
 
+        /*
+            get email from database
+        */
+
+
+
+        // check if the user is logged in
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var isLoggedIn = dataSnapshot.exists()
+                var email: String? = null
                 for (snapshot in dataSnapshot.children) {
+                    email = snapshot.child("email").getValue(String::class.java)
                     val isAdmin = snapshot.child("admin").getValue(Boolean::class.java)
                     if (isAdmin == true) {
                         isLoggedIn = false
                         break
                     }
+                }
+                if (email != null) {
+                    GlobalData.userEmail = email
                 }
                 callback.invoke(isLoggedIn)
             }

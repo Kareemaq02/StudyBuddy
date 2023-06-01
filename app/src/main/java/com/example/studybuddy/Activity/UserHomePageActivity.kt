@@ -10,7 +10,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.studybuddy.R
 import com.example.studybuddy.UserFragments.*
-
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -22,11 +21,9 @@ class UserHomePageActivity : AppCompatActivity()  {
         val viewPager: ViewPager2 = findViewById(R.id.viewPagerUser)
         val fragmentAdapter = MyPagerAdapter(this)
         fragmentAdapter.addFragment(UserSemestersManagerFragment())
-        fragmentAdapter.addFragment(UserDashboardFragment())
         fragmentAdapter.addFragment(UserRequestFragment())
         fragmentAdapter.addFragment(UserEnrolledLessonsFragment())
         fragmentAdapter.addFragment(UserSettingsFragment())
-        fragmentAdapter.addFragment(UserSemesters())
         viewPager.adapter = fragmentAdapter
         val tabLayout: TabLayout = findViewById(R.id.tabLayoutUser)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
@@ -35,9 +32,7 @@ class UserHomePageActivity : AppCompatActivity()  {
                 0 -> tab.setIcon(R.drawable.mortarboard)
                 1 -> tab.setIcon(R.drawable.readingbook)
                 2 -> tab.setIcon(R.drawable.readingbook)
-                3 -> tab.setIcon(R.drawable.readingbook)
-                4 -> tab.setIcon(R.drawable.settings)
-                5 -> tab.setIcon(R.drawable.mortarboard)
+                3 -> tab.setIcon(R.drawable.settings)
             }
         }.attach()
     }

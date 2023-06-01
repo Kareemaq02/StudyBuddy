@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studybuddy.R
 import com.google.firebase.database.*
+import androidx.lifecycle.ViewModelProvider
+
+
 
 class UserSemesters : Fragment() {
 
@@ -25,6 +28,7 @@ class UserSemesters : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         recyclerView = view.findViewById(R.id.semesterRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = SemesterAdapter(semesterInfoList)

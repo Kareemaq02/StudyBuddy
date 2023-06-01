@@ -1,5 +1,6 @@
 package com.example.studybuddy.Activity
 
+import UserSemestersManagerFragment
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
@@ -9,9 +10,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.example.studybuddy.EmailViewModel
 import com.example.studybuddy.R
 import com.example.studybuddy.auth.AdminAuth
 import com.example.studybuddy.auth.UserAuth
+import com.example.studybuddy.data.GlobalData
 import com.example.studybuddy.data.Session
 import com.google.firebase.database.*
 class LoginActivity : AppCompatActivity() {
@@ -19,9 +23,16 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
     private lateinit var loginButtonAdmin: Button
 
+    private lateinit var emailViewModel: EmailViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        //email view model to store and share emial
+        emailViewModel = ViewModelProvider(this).get(EmailViewModel::class.java)
+
         val createAccountTextView = findViewById<TextView>(R.id.createAccountTextView)
         createAccountTextView.paintFlags = createAccountTextView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         createAccountTextView.setOnClickListener {
@@ -42,10 +53,15 @@ class LoginActivity : AppCompatActivity() {
             val passwordtext = findViewById<EditText>(R.id.editTextTextPassword)
             val password = passwordtext.text.toString()
 
+            // now we store the email in the view model to share it among all project
+            emailViewModel.email = email
+
+
             // Validate credentials
             if (validateCredentials(email, password)) {
                 // Perform login
                 login(email, password,  false)
+                // Send email to Semester Manager Fragment
             } else {
                 // Show error message for invalid credentials
                 Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
@@ -89,6 +105,9 @@ class LoginActivity : AppCompatActivity() {
                 val collectionRef: DatabaseReference = database.getReference("Sessions")
                 val deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
                 val query = collectionRef.orderByChild("deviceId").equalTo(deviceId)
+
+                GlobalData.userEmail = email
+                println(GlobalData.userEmail)
 
                 query.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
