@@ -87,7 +87,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageView3" app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintVertical_bias="0.639" android:minHeight="48dp"/>
     <Button
-            android:text="Button"
+            android:text="Sign Up"
             android:layout_width="98dp"
             android:layout_height="48dp" android:id="@+id/signupButton"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"

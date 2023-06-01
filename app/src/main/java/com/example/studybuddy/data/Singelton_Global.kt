@@ -1,4 +1,5 @@
 object GlobalData {
+    var userEmail: String = ""
     var studyPlanId: String = ""
     var studyPlanCourseList: ArrayList<String>? = null
     var savedPrerequisites: ArrayList<String> = ArrayList()
