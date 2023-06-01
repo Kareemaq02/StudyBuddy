@@ -1,4 +1,7 @@
+package com.example.studybuddy.Fragments
 
+import GlobalData
+import Major
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +13,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import com.example.studybuddy.Fragments.StudyPlanFragment
+import com.example.studybuddy.Activity.StudyPlanActivity
 import com.example.studybuddy.R
-import com.example.studybuddy.data.Major
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,25 +28,26 @@ class CourseFragment : Fragment() {
     private lateinit var adapter: ArrayAdapter<String>
     private val arrayList = ArrayList<String>()
     private lateinit var button: FloatingActionButton
+    private val majorIdList = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view = inflater.inflate(R.layout.fragment_course, container, false)
         listView = view.findViewById(R.id.studyplanListView)
 
         val database = FirebaseDatabase.getInstance()
         val majorRef = database.getReference("majors")
 
-
         majorRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 arrayList.clear()
+                majorIdList.clear()
                 for (childSnapshot in dataSnapshot.children) {
                     val majorName = childSnapshot.child("name").getValue(String::class.java)
                     arrayList.add(majorName.toString())
+                    majorIdList.add(childSnapshot.key.toString())
                 }
 
                 // Create the custom adapter
@@ -56,13 +59,11 @@ class CourseFragment : Fragment() {
                 ) {
                     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                         val view = super.getView(position, convertView, parent)
-
                         return view
                     }
                 }
 
                 listView.adapter = adapter
-
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -73,41 +74,15 @@ class CourseFragment : Fragment() {
         listView.setOnItemClickListener { parent, view, position, id ->
             val selectedMajor = arrayList[position]
             val majorName = selectedMajor
-            val intent = Intent(requireContext(), StudyPlanFragment::class.java)
+            val majorId = majorIdList[position] // Retrieve major ID from the list
+
+            val intent = Intent(requireContext(), StudyPlanActivity::class.java)
             intent.putExtra("majorName", majorName)
+            intent.putExtra("majorId", majorId)
+            GlobalData.globalMajorId= majorId
 
-            // Retrieve the study plan data for the selected major
-            val studyPlanNames = mutableListOf<String>()
-
-            val majorsRef = FirebaseDatabase.getInstance().getReference("majors")
-            majorsRef.orderByChild("name").equalTo(majorName).addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    for (majorSnapshot in dataSnapshot.children) {
-                        val studyPlansRef = majorSnapshot.child("studyPlans").ref
-                        studyPlansRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onDataChange(studyPlanDataSnapshot: DataSnapshot) {
-                                for (studyPlanSnapshot in studyPlanDataSnapshot.children) {
-                                    val studyPlanName = studyPlanSnapshot.child("name").getValue(String::class.java)
-                                    studyPlanName?.let { studyPlanNames.add(it) }
-                                }
-
-                               intent.putExtra("studyPlans",ArrayList(studyPlanNames))
-                                startActivity(intent)
-                            }
-
-                            override fun onCancelled(databaseError: DatabaseError) {
-                                // Handle any errors that occur
-                            }
-                        })
-                    }
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-                    // Handle any errors that occur
-                }
-            })
+            startActivity(intent)
         }
-
 
         button = view.findViewById(R.id.addMajorButton)
         button.setOnClickListener {
@@ -145,8 +120,6 @@ class CourseFragment : Fragment() {
                 dialog.dismiss()
             }
         }
-
-
 
         return view
     }
