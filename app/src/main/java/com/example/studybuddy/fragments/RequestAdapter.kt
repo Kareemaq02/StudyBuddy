@@ -63,7 +63,6 @@ class RequestAdapter : ListAdapter<teachRequest, RequestAdapter.RequestViewHolde
         private val infoButton: ImageButton = itemView.findViewById(R.id.infoButton)
 
         fun bind(request: teachRequest) {
-            //TODO add the other data to be shon in the item
             titleTextView.text = request.course_Name
             descriptionTextView.text = "Description:"+ request.lessonDescription
             dateTextView.text ="Date: "+"${request.start_date}" + " - " + "${request.end_date}"

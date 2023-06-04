@@ -1,5 +1,6 @@
 package com.example.studybuddy.Activity
 import GlobalData
+import GlobalData.globalMajorId
 import StudyPlan
 import android.content.Intent
 import android.os.Bundle
@@ -107,6 +108,51 @@ class StudyPlanActivity : AppCompatActivity() {
                     }
                 })
         }
+        listView.setOnItemLongClickListener { parent, view, position, id ->
+            val selectedStudyPlan = arrayList[position]
+
+            val majorId = GlobalData.globalMajorId
+
+            val builder = AlertDialog.Builder(listView.context)
+            builder.setTitle(selectedStudyPlan)
+            builder.setMessage("Are you sure you want to remove $selectedStudyPlan?")
+            builder.setPositiveButton("Yes") { _, _ ->
+                val studyPlansRef = FirebaseDatabase.getInstance().getReference("majors").child(majorId).child("Study Plans")
+
+                studyPlansRef.orderByChild("name").equalTo(selectedStudyPlan)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                for (studyPlanSnapshot in dataSnapshot.children) {
+                                    studyPlanSnapshot.ref.removeValue()
+                                        .addOnSuccessListener {
+                                            Toast.makeText(listView.context, "Study plan removed", Toast.LENGTH_SHORT).show()
+                                            arrayList.removeAt(position)
+                                            (listView.adapter as ArrayAdapter<String>).notifyDataSetChanged()
+                                        }
+
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                        }
+                    })
+            }
+
+            builder.setNegativeButton("Cancel") { _, _ ->
+                // Cancel button clicked
+            }
+
+            val dialog = builder.create()
+            dialog.show()
+
+            true
+        }
+
+
+
+
 
 
         button = findViewById(R.id.addStudyPlan)
