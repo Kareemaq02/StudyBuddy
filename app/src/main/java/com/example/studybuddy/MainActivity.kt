@@ -8,11 +8,25 @@ import com.example.studybuddy.Activity.LoginActivity
 import com.example.studybuddy.Activity.UserHomePageActivity
 import com.example.studybuddy.auth.AdminAuth
 import com.example.studybuddy.auth.UserAuth
+import com.google.firebase.messaging.FirebaseMessaging
+
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        // Register for FCM token
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val token = task.result
+                    // Save the token to your server or use it to send notifications
+                } else {
+                    // Handle the error
+                }
+            }
 
 
         // Check if the user is logged in
