@@ -1,6 +1,6 @@
 package com.example.studybuddy.Activity
 
-import UserSemestersManagerFragment
+import GlobalData
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
@@ -15,7 +15,6 @@ import com.example.studybuddy.EmailViewModel
 import com.example.studybuddy.R
 import com.example.studybuddy.auth.AdminAuth
 import com.example.studybuddy.auth.UserAuth
-import com.example.studybuddy.data.GlobalData
 import com.example.studybuddy.data.Session
 import com.google.firebase.database.*
 class LoginActivity : AppCompatActivity() {
@@ -121,7 +120,6 @@ class LoginActivity : AppCompatActivity() {
                             if (key != null) {
                                 collectionRef.child(key).setValue(session)
                                     .addOnSuccessListener {
-                                        Toast.makeText(this@LoginActivity, "Session created successfully", Toast.LENGTH_SHORT).show()
                                     }
                                     .addOnFailureListener { error ->
                                         println("Failed to add session: $error")
