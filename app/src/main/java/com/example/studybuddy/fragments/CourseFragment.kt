@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.studybuddy.Activity.StudyPlanActivity
 import com.example.studybuddy.R
@@ -80,8 +81,29 @@ class CourseFragment : Fragment() {
             intent.putExtra("majorName", majorName)
             intent.putExtra("majorId", majorId)
             GlobalData.globalMajorId= majorId
-
             startActivity(intent)
+        }
+        listView.setOnItemLongClickListener { parent, view, position, id ->
+            val majorkey = majorIdList[position]
+            val selectedMajor = listView.getItemAtPosition(position) as String
+            val builder = androidx.appcompat.app.AlertDialog.Builder(listView.context)
+            builder.setTitle("Remove Major")
+            builder.setMessage("Are you sure you want to remove $selectedMajor?")
+            builder.setPositiveButton("Yes") { _, _ ->
+                majorRef.child(majorkey).removeValue()
+                    .addOnSuccessListener {
+                        Toast.makeText(listView.context, "Major removed", Toast.LENGTH_SHORT).show()
+                        arrayList.removeAt(position)
+                        (listView.adapter as ArrayAdapter<String>).notifyDataSetChanged()
+                }
+            }
+            builder.setNegativeButton("Cancel") { _, _ ->
+
+            }
+            val dialog = builder.create()
+            dialog.show()
+
+            true
         }
 
         button = view.findViewById(R.id.addMajorButton)

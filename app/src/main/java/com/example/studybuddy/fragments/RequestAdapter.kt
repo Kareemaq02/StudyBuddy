@@ -24,7 +24,6 @@ import java.util.Locale
 
 
 class RequestAdapter : ListAdapter<teachRequest, RequestAdapter.RequestViewHolder>(RequestDiffCallback()) {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RequestViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.request_item, parent, false)
         return RequestViewHolder(itemView)
@@ -33,6 +32,7 @@ class RequestAdapter : ListAdapter<teachRequest, RequestAdapter.RequestViewHolde
     override fun onBindViewHolder(holder: RequestViewHolder, position: Int) {
         //this function for each individual view item
         val currentRequest = getItem(position)
+
         // Check if the date and time have passed
         val isDateTimePassed = isDateTimePassed(currentRequest.end_date, currentRequest.end_time)
 

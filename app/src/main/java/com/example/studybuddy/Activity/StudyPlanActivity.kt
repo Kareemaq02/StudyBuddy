@@ -23,6 +23,7 @@ class StudyPlanActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_study_plan)
+
         val customToolbar = findViewById<TextView>(R.id.action_bar_title)
         customToolbar.text = intent.getStringExtra("majorName")
 
