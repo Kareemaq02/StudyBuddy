@@ -79,6 +79,9 @@
                   android:label="UserMakeRequestActivity">
         </activity>
 
+        <activity android:name=".Activity.UserAddCoursesActivity"
+                  android:label="UserAddCoursesActivity">
+        </activity>
     </application>
 
 </manifest>
