@@ -44,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
 
         loginButton = findViewById(R.id.loginButton)
 
+        //login button for user
         loginButton.setOnClickListener {
 
 
