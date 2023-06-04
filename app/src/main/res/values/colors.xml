@@ -10,5 +10,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#FF0000FF</color>
     <color name="whitish">#C4C4C4</color>
+    <color name="burbul">#5243B9</color>
+    <color name="red">#FF0000</color>
+
+
+
 
 </resources>
