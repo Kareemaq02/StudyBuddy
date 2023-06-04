@@ -15,7 +15,6 @@ import com.example.studybuddy.EmailViewModel
 import com.example.studybuddy.R
 import com.example.studybuddy.auth.AdminAuth
 import com.example.studybuddy.auth.UserAuth
-import com.example.studybuddy.data.GlobalData
 import com.example.studybuddy.data.Session
 import com.google.firebase.database.*
 class LoginActivity : AppCompatActivity() {
@@ -45,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
 
         loginButton = findViewById(R.id.loginButton)
 
+        //login button for user
         loginButton.setOnClickListener {
 
 

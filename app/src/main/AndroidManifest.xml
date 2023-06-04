@@ -75,6 +75,9 @@
         <activity android:name=".Activity.AdminViewCourseInfoActivity"
                   android:label="AdminPrerequisitesActivity">
         </activity>
+        <activity android:name=".Activity.UserAddCoursesActivity"
+                  android:label="UserAddCoursesActivity">
+        </activity>
 
     </application>
 

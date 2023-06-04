@@ -96,7 +96,7 @@ class AdminAddCourseActivity : AppCompatActivity() {
                                         val courseCode = courseSnapshot.child("CourseCode").getValue(String::class.java)
 
                                         if (courseName != null && courseDescription != null && courseCode != null) {
-                                            val course = Course(courseName, courseCode, courseDescription, null)
+                                            val course = Course(courseName, courseCode, courseDescription, "", null)
                                             courseList.add(course) // Add each course to the list
                                         }
                                     }
@@ -226,7 +226,7 @@ class AdminAddCourseActivity : AppCompatActivity() {
 
             checkIfCourseExists(GlobalData.globalMajorId, GlobalData.studyPlanId, courseSpinner.selectedItem.toString()) { courseExists ->
                 if(!courseExists) {
-                    val courseToAdd = Course(courseName2, courseCode, courseDescription, preList)
+                    val courseToAdd = Course(courseName2, courseCode, courseDescription,"", preList)
                     majorsRef.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             for (majorSnapshot in dataSnapshot.children) {

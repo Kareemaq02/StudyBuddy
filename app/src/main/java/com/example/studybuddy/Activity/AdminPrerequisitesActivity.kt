@@ -170,7 +170,7 @@ class AdminPrerequisitesActivity : AppCompatActivity() {
                                     if (courseName == spinner2.selectedItem.toString()) {
 
                                         if (courseCode != null && courseDescription != null) {
-                                            val course = Course(courseName, courseCode, courseDescription, null)
+                                            val course = Course(courseName, courseCode, courseDescription, "", null)
                                             prerequisites[courseId] = course
                                         }
                                     }

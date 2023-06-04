@@ -69,10 +69,6 @@ class SettingFragment : Fragment() {
         changePasswordButton.setOnClickListener { showChangePasswordDialog() }
         logoutButton.setOnClickListener {showLogoutDialog()}
         returnHomePage.setOnClickListener { navigateHome() }
-        val changePhotoButton: ImageButton = view.findViewById(R.id.imageButton)
-        changePhotoButton.setOnClickListener {
-            openGallery()
-        }
 
         return view
     }
@@ -195,17 +191,16 @@ class SettingFragment : Fragment() {
                     // Passwords match
                     // Perform your desired action here, such as showing a password change form
                     showNewPasswordDialog()
-                    println("FuckABed2")
+                    println("Change Successfully")
                 } else {
                     // Passwords do not match
                     // Perform your desired action here, such as showing an error message
 
                     showIncorrectPasswordDialog()
 
-                    println("FuckABed888")
+                    println("incorrect password")
                 }
                 dialogInterface.dismiss()
-                println("FuckABed3")
             }
 
         }
@@ -278,7 +273,6 @@ class SettingFragment : Fragment() {
         dialog.show()
     }
     private fun showIncorrectPasswordDialog() {
-        println("FuckABed69")
         //val alertDialogBuilder = AlertDialog.Builder(this)
         val alertDialogBuilder = AlertDialog.Builder(requireActivity())
         alertDialogBuilder.setTitle("Incorrect Password")
@@ -353,16 +347,14 @@ class SettingFragment : Fragment() {
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var match = dataSnapshot.exists()
+                var match = false
                 for (snapshot in dataSnapshot.children) {
-
-                    if(password==snapshot.child("password").getValue(String::class.java))
+                    if (password == snapshot.child("password").getValue(String::class.java)) {
                         match = true
-
-                    callback.invoke(match);
-
+                        break
+                    }
                 }
-
+                callback.invoke(match)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
