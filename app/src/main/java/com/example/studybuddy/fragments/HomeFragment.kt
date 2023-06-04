@@ -1,4 +1,4 @@
-package com.example.studybuddy.Fragments
+package com.example.studybuddy.fragments
 import RequestAdapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,6 +1,6 @@
 package com.example.studybuddy.Activity
 
-import UserSemestersManagerFragment
+import GlobalData
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
@@ -121,7 +121,6 @@ class LoginActivity : AppCompatActivity() {
                             if (key != null) {
                                 collectionRef.child(key).setValue(session)
                                     .addOnSuccessListener {
-                                        Toast.makeText(this@LoginActivity, "Session created successfully", Toast.LENGTH_SHORT).show()
                                     }
                                     .addOnFailureListener { error ->
                                         println("Failed to add session: $error")
