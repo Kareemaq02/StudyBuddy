@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import com.example.studybuddy.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
 
 class UserSettingsFragment : Fragment() {
 
@@ -51,8 +50,8 @@ class UserSettingsFragment : Fragment() {
 
         // Get the current user reference using the email
         email = GlobalData.userEmail
-        showFirstName = GlobalData.userFirstName
-        showLastName = GlobalData.userLastName
+        showFirstName = "fuck Ibrahim"
+        showLastName = "fuch u"
 
         currentUserRef = usersRef.orderByChild("email").equalTo(email).limitToFirst(1).ref
 
