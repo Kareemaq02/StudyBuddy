@@ -1,7 +1,7 @@
 package com.example.studybuddy.auth
+import GlobalData
 import android.content.ContentResolver
 import android.provider.Settings
-import com.example.studybuddy.data.GlobalData
 import com.google.firebase.database.*
 
 
@@ -15,28 +15,57 @@ object UserAuth {
         val query = collectionRef.orderByChild("deviceId").equalTo(deviceId)
 
         /*
-            get email from database
+            Get email from database
         */
-
-
 
         // check if the user is logged in
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var isLoggedIn = dataSnapshot.exists()
                 var email: String? = null
+                var loggedInUserId: String? = null // Variable to store the user's key
+
                 for (snapshot in dataSnapshot.children) {
                     email = snapshot.child("email").getValue(String::class.java)
                     val isAdmin = snapshot.child("admin").getValue(Boolean::class.java)
+
                     if (isAdmin == true) {
                         isLoggedIn = false
                         break
                     }
                 }
+
                 if (email != null) {
                     GlobalData.userEmail = email
+
+                    // Retrieve the user's key from the "Users" table
+                    val usersRef = database.getReference("users")
+                    val userQuery = usersRef.orderByChild("email").equalTo(email)
+
+                    userQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(userSnapshot: DataSnapshot) {
+                            if (userSnapshot.exists()) {
+                                for (user in userSnapshot.children) {
+                                    loggedInUserId = user.key.toString() // Retrieve the user's key
+                                    break
+                                }
+                            }
+
+                            if (loggedInUserId != null) {
+                                GlobalData.loggedInUserId = loggedInUserId as String
+                            }
+
+                            callback.invoke(isLoggedIn)
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            // Handle the database error, if necessary
+                            callback.invoke(false)
+                        }
+                    })
+                } else {
+                    callback.invoke(isLoggedIn)
                 }
-                callback.invoke(isLoggedIn)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -45,6 +74,7 @@ object UserAuth {
             }
         })
     }
+
 
 
 
@@ -58,6 +88,7 @@ object UserAuth {
                         val userPassword = childSnapshot.child("password").getValue(String::class.java)
 
                         if (userPassword.equals(password)&&userEmail.equals(email)) {
+                            GlobalData.loggedInUserId = childSnapshot.key.toString()
                             // Match found: email and password are correct
                             callback.invoke(true)
                             return
