@@ -1,7 +1,7 @@
 package com.example.studybuddy.data
 
 data class teachRequest(
-    val requestId: String? = null,
+    var requestId: String? = null,
     val major_Name: String,
     val course_Name: String,
     val req_time: String,

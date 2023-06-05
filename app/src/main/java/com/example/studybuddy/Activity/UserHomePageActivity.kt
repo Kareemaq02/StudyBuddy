@@ -34,7 +34,7 @@ class UserHomePageActivity : AppCompatActivity()  {
             when (position) {
                 0 -> tab.setIcon(R.drawable.graduate_cap)
                 1 -> tab.setIcon(R.drawable.reading_book)
-                2 -> tab.setIcon(R.drawable.reading_book)
+                2 -> tab.setIcon(R.drawable.calendar__3_)
                 3 -> tab.setIcon(R.drawable.settings__2_)
             }
         }.attach()
