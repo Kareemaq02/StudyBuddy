@@ -9,11 +9,12 @@ data class learnRequest(
     val pref_time: String,
     val pref_date: String,
     val userId: String,
-    val upvoters: Int,
+    var upvoters: Int,
     val requestDescription: String,
-    val requestType: String
+    val requestType: String,
+    var upVotersIds: ArrayList<String>
 )
 {
     // Empty constructor for Firebase deserialization
-    constructor() : this("","", "", "", "", "", "", "", 0, "", "")
+    constructor() : this("","", "", "", "", "", "", "", 0, "", "",ArrayList())
 }

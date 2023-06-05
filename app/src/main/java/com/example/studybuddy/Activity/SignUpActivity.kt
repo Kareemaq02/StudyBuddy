@@ -4,8 +4,6 @@ package com.example.studybuddy.Activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
-import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -83,7 +81,7 @@ class SignUpActivity : AppCompatActivity() {
                             // Email is not registered, proceed with the signup process
                             val database = FirebaseDatabase.getInstance()
                             val usersRef = database.getReference("users")
-                            val userData = User(email, password, firstName, lastName, selectedSpinnerItem)
+                            val userData = User(email, password, firstName, lastName, selectedSpinnerItem,0.0,0)
                             val newUserRef = usersRef.push()
                             newUserRef.setValue(userData)
                             // Show a success message or navigate to the next screen

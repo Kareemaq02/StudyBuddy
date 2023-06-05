@@ -15,60 +15,48 @@
 
         <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="138dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
             <TextView
-                    android:id="@+id/textViewFirstName"
+                    android:id="@+id/FirstNameTrack"
                     android:text="First Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            <TextView
+                    android:id="@+id/LastNameTrack"
+                    android:text="Last Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            <TextView
+                    android:id="@+id/majorNameTrack2"
+                    android:text="Major 1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            <TextView
+                    android:id="@+id/courseNameTrack2"
+                    android:text="Course 2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black"/>
 
-            <TextView
-                    android:id="@+id/textViewLastName"
-                    android:text="Last Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"/>
 
             <LinearLayout
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                <ImageView
-                        android:id="@+id/imageViewReq"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/circular_image_background"
-                        android:scaleType="centerCrop"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/circular_image_background"/>
-
-                <RatingBar
-                        android:id="@+id/ratingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:rating="3.5"
-                        android:numStars="5"
-                        android:stepSize="0.5"
-                        android:layout_marginTop="-10dp"
-                        android:layout_marginStart="-62dp"
-                        android:progressTint="#FFD700"
-                        android:secondaryProgressTint="#FFD700"
-                        android:scaleX="0.5"
-                        android:scaleY="0.5"
-                        android:layout_marginEnd="20dp"
-                android:isIndicator="true"/>
-
-            </LinearLayout>
+                    android:orientation="vertical"/>
         </LinearLayout>
 
         <LinearLayout
@@ -78,34 +66,15 @@
                 android:orientation="vertical">
 
             <TextView
-                    android:id="@+id/textViewMajor"
-                    android:text="Major"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"/>
-
-            <TextView
-                    android:id="@+id/textViewCourseName"
-                    android:text="Course Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"/>
-
-            <TextView
-                    android:id="@+id/textViewDate"
+                    android:id="@+id/textViewDateTrack2"
                     android:text="07/23/2023"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black"/>
-
             <TextView
-                    android:id="@+id/textViewTime"
+                    android:id="@+id/textViewTimeTrack2"
                     android:text="1:00 PM - 2:00 PM"
                     android:layout_marginStart="0dp"
                     android:layout_width="wrap_content"
@@ -115,7 +84,7 @@
                     android:textColor="@android:color/black"/>
 
             <TextView
-                    android:id="@+id/textViewPlace"
+                    android:id="@+id/textViewPlaceTrack2"
                     android:text="C307"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -144,7 +113,7 @@
                             android:src="@drawable/baseline_people_24"/>
 
                     <TextView
-                            android:id="@+id/textViewParticipantsCount"
+                            android:id="@+id/textViewParticipantsCountTrack2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
@@ -158,29 +127,16 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
-            android:id="@+id/textViewDescription"
-            android:text="Description Goes Here...."
-            android:paddingTop="10dp"
-            android:paddingLeft="10dp"
-            android:layout_width="336dp"
-            android:layout_height="111dp"
-            android:textSize="14sp"
-            android:textColor="@android:color/black"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:background="@drawable/custom_edit_text"/>
-
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end">
 
         <Button
-                android:id="@+id/buttonParticipate"
+                android:id="@+id/buttonComplete2"
                 android:layout_width="308dp"
                 android:layout_height="44dp"
-                android:text="Participate"
+                android:text="Complete lesson"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
                 android:textColor="@android:color/white"
