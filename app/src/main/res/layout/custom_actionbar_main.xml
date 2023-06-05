@@ -22,7 +22,7 @@
                 android:textColor="@color/white"
                 android:textStyle="normal"/>
         <ImageView
-                android:layout_marginStart="355dp"
+                android:layout_marginStart="320dp"
                 android:id="@+id/backButton"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
