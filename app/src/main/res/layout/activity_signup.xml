@@ -24,10 +24,10 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.761"
             app:layout_constraintVertical_bias="0.026"/>
     <EditText
+            android:hint="First Name"
             android:layout_width="129dp"
             android:layout_height="55dp"
             android:inputType="textPersonName|textCapWords"
-            android:text="First Name"
             android:textColor="@color/white"
             android:ems="10"
             android:id="@+id/FirstName"
@@ -35,10 +35,10 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageView3" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.311"/>
     <EditText
+            android:hint="Last Name"
             android:layout_width="129dp"
             android:layout_height="55dp"
             android:inputType="textPersonName|textCapWords"
-            android:text="Last Name"
             android:textColor="@color/white"
             android:ems="10"
             android:id="@+id/LastName"
@@ -46,10 +46,10 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageView3" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.421"/>
     <EditText
+            android:hint="Email"
             android:layout_width="129dp"
             android:layout_height="55dp"
             android:inputType="textPersonName"
-            android:text="Email"
             android:textColor="@color/white"
             android:ems="10"
             android:id="@+id/PersonalEmail"
@@ -57,10 +57,10 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageView3" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.53"/>
     <EditText
+            android:hint="Password"
             android:layout_width="129dp"
             android:layout_height="55dp"
             android:inputType="textPassword"
-            android:text="Password"
             android:textColor="@color/white"
             android:ems="10"
             android:id="@+id/PersonalPassword"
@@ -68,10 +68,10 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageView3" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.753"/>
     <EditText
+            android:hint="Confirm Pass"
             android:layout_width="129dp"
             android:layout_height="55dp"
             android:inputType="textPassword"
-            android:text="confirm pass"
             android:textColor="@color/white"
             android:ems="10"
             android:id="@+id/ConfirmPersonalPassword"
