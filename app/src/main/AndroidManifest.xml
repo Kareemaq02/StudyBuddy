@@ -47,6 +47,18 @@
                 android:windowSoftInputMode="adjustPan">
 
         </activity>
+        <activity
+                android:name=".Activity.AdminAddCourseSettingActivity"
+                android:label="AdminAddCourseSettingActivity"
+                android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <activity
+                android:name=".Activity.AdminMergedSelectedCourses"
+                android:label="AdminMergedSelectedCourses"
+                android:windowSoftInputMode="adjustPan">
+
+        </activity>
 
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
 

@@ -9,14 +9,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
+import android.widget.*
 import androidx.fragment.app.Fragment
+import com.example.studybuddy.Activity.AdminAddCourseSettingActivity
 import com.example.studybuddy.Activity.LoginActivity
 import com.example.studybuddy.R
 import com.google.firebase.database.*
@@ -26,14 +25,13 @@ class SettingFragment : Fragment() {
 
     private lateinit var firstNameEditText: EditText
     private lateinit var lastNameEditText: EditText
+    private lateinit var emailTextView: TextView
     private lateinit var changePasswordButton: Button
     private lateinit var pencilImageButton1: ImageButton
     private lateinit var pencilImageButton2: ImageButton
     private lateinit var logoutButton: Button
-    private lateinit var returnHomePage: Button
-    private val REQUEST_IMAGE_PICK = 100
-    private lateinit var imageView6: ImageView
-    private lateinit var imageView7: ImageView
+    private lateinit var addCourseButton: Button
+
 
     private val database: FirebaseDatabase by lazy {
         FirebaseDatabase.getInstance()
@@ -51,15 +49,15 @@ class SettingFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_setting, container, false)
         super.onViewCreated(view, savedInstanceState)
 
-        imageView6 = view.findViewById(R.id.imageView6)
-        imageView7 = view.findViewById(R.id.imageView7)
+
         firstNameEditText = view.findViewById(R.id.editTextTextPersonName4)
         lastNameEditText = view.findViewById(R.id.editTextTextPersonName3)
         changePasswordButton = view.findViewById(R.id.button4)
         pencilImageButton1 = view.findViewById(R.id.imageButton4)
         pencilImageButton2 = view.findViewById(R.id.imageButton3)
         logoutButton = view.findViewById(R.id.button2)
-        returnHomePage = view.findViewById(R.id.button)
+        addCourseButton = view.findViewById(R.id.button)
+        emailTextView = view.findViewById(R.id.email)
 
 
 
@@ -67,11 +65,37 @@ class SettingFragment : Fragment() {
         pencilImageButton2.setOnClickListener { confirmLastNameChange() }
         changePasswordButton.setOnClickListener { showChangePasswordDialog() }
         logoutButton.setOnClickListener {showLogoutDialog()}
-        returnHomePage.setOnClickListener { navigateHome() }
+        addCourseButton.setOnClickListener {
+
+            val intent = Intent(requireActivity(), AdminAddCourseSettingActivity::class.java)
+            startActivity(intent)
+
+        }
+        val database = FirebaseDatabase.getInstance()
+        val adminsRef = database.getReference("admin").child("11").child("email")
+        adminsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val email = dataSnapshot.getValue(String::class.java)
+                emailTextView.text = email
+
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("SettingFragment", "Failed to retrieve email: ${databaseError.message}")
+            }
+        })
+
+
+
+
+
+
 
         return view
     }
 
+/*
     private fun showFirstNameFromFirebase(firstName: String) {
         firstNameEditText.setText(firstName)
     }
@@ -79,6 +103,8 @@ class SettingFragment : Fragment() {
     private fun showLastNameFromFirebase(lastName: String) {
         lastNameEditText.setText(lastName)
     }
+
+ */
 
     private fun confirmFirstNameChange() {
         val newFirstName = firstNameEditText.text.toString().trim()
@@ -134,45 +160,7 @@ class SettingFragment : Fragment() {
             dialog.show()
         }
     }
-    private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, REQUEST_IMAGE_PICK)
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_PICK && resultCode == Activity.RESULT_OK && data != null) {
-            val selectedImageUri: Uri? = data.data
-            selectedImageUri?.let { uri ->
-                val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
-                val croppedBitmap = cropToImageViewSize(bitmap)
-                imageView6.setImageBitmap(croppedBitmap)
-                imageView6.visibility = View.VISIBLE
-                imageView7.visibility = View.GONE   // to hide the black person image after selecting the photo
 
-            }
-        }
-    }
-    private fun cropToImageViewSize(bitmap: Bitmap): Bitmap {
-        val targetWidth = imageView6.width
-        val targetHeight = imageView6.height
-
-        val scaleFactor = calculateScaleFactor(bitmap.width, bitmap.height, targetWidth, targetHeight)
-
-        val scaledWidth = (bitmap.width * scaleFactor).toInt()
-        val scaledHeight = (bitmap.height * scaleFactor).toInt()
-
-        val scaledBitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, true)
-
-        val x = (scaledWidth - targetWidth) / 2
-        val y = (scaledHeight - targetHeight) / 2
-
-        return Bitmap.createBitmap(scaledBitmap, x, y, targetWidth, targetHeight)
-    }
-    private fun calculateScaleFactor(imageWidth: Int, imageHeight: Int, targetWidth: Int, targetHeight: Int): Float {
-        val scaleX = targetWidth.toFloat() / imageWidth
-        val scaleY = targetHeight.toFloat() / imageHeight
-        return if (scaleX < scaleY) scaleX else scaleY
-    }
 
     private fun showChangePasswordDialog() {
         val builder = AlertDialog.Builder(requireContext())
@@ -300,10 +288,7 @@ class SettingFragment : Fragment() {
         val dialog = builder.create()
         dialog.show()
     }
-    private fun navigateHome(){
 
-        //bitch do the navigation here
-    }
     private fun showLogoutDialog() {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle("Log Out")
