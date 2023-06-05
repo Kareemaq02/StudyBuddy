@@ -3,10 +3,8 @@ package com.example.studybuddy.Activity
 import GlobalData
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.studybuddy.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -51,8 +49,7 @@ class StudyPlanCoursesActivity : AppCompatActivity() {
                                             courseList.clear()
                                             GlobalData.studyPlanCourseList?.clear()
                                             for (courseSnapshot in coursesDataSnapshot.children) {
-                                                val courseName =
-                                                    courseSnapshot.child("name").getValue(String::class.java)
+                                                val courseName = courseSnapshot.child("name").getValue(String::class.java)
                                                 courseName?.let { courseList.add(it) }
                                                 GlobalData.studyPlanCourseList?.let { courseList.add(it.toString()) }
                                             }
@@ -123,6 +120,56 @@ class StudyPlanCoursesActivity : AppCompatActivity() {
                 }
             })
         }
+        listView.setOnItemLongClickListener { _, view, position, _ ->
+            val selectedCourse = courseList[position]
+            val majorId = GlobalData.globalMajorId
+            val builder = AlertDialog.Builder(view.context)
+            builder.setTitle(selectedCourse)
+            builder.setMessage("Are you sure you want to remove $selectedCourse?")
+            builder.setPositiveButton("Yes") { _, _ ->
+                val studyPlansRef = FirebaseDatabase.getInstance().getReference("majors").child(majorId).child("Study Plans")
+                studyPlansRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        for (studyPlanSnapshot in dataSnapshot.children) {
+                            val coursesRef = studyPlanSnapshot.child("courses").ref
+
+                            coursesRef.orderByChild("name").equalTo(selectedCourse)
+                                .addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(coursesDataSnapshot: DataSnapshot) {
+                                        if (coursesDataSnapshot.exists()) {
+                                            for (courseSnapshot in coursesDataSnapshot.children) {
+                                                courseSnapshot.ref.removeValue()
+                                                    .addOnSuccessListener {
+                                                        Toast.makeText(view.context, "Course removed", Toast.LENGTH_SHORT).show()
+                                                        courseList.removeAt(position)
+                                                        (listView.adapter as ArrayAdapter<String>).notifyDataSetChanged()
+                                                    }
+                                            }
+                                        }
+                                    }
+
+                                    override fun onCancelled(databaseError: DatabaseError) {
+                                    }
+                                })
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        // Handle any errors that occur
+                    }
+                })
+            }
+
+            builder.setNegativeButton("Cancel") { _, _ ->
+                // Cancel button clicked
+            }
+
+            val dialog = builder.create()
+            dialog.show()
+
+            true
+        }
+
 
 
 
