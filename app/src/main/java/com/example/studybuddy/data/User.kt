@@ -5,5 +5,7 @@ data class User(
     var password: String,
     val firstname: String,
     val lastname: String,
-    var major: String
+    var major: String,
+    var numStars: Double,
+    var ratersCount: Int
 )

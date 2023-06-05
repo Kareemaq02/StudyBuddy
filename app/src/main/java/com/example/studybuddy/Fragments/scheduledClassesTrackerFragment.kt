@@ -1,4 +1,5 @@
-package com.example.studybuddy.UserFragments
+package com.example.studybuddy.fragments
+
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,17 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studybuddy.R
-import com.example.studybuddy.adapters.RequestsAdapter
-import com.example.studybuddy.data.learnRequest
+import com.example.studybuddy.adapters.ScheduleClassAdapter
 import com.example.studybuddy.data.teachRequest
 import com.google.firebase.database.*
 
+class scheduledClassesTrackerFragment : Fragment() {
 
-class UserRequestFragment : Fragment() {
-    // ...
+    private lateinit var recyclerView: RecyclerView
 
     private lateinit var database: FirebaseDatabase
     private lateinit var requestsRef: DatabaseReference
+    private lateinit var adapter: ScheduleClassAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +29,15 @@ class UserRequestFragment : Fragment() {
         requestsRef = database.reference.child("requests")
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_user_request, container, false)
+        val view = inflater.inflate(R.layout.scheduled_classes, container, false)
 
         // Get reference to the RecyclerView
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewRequests)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewTrack)
 
         // Set layout manager to the RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -49,16 +51,10 @@ class UserRequestFragment : Fragment() {
                     val requestType = childSnapshot.child("requestType").getValue(String::class.java)
 
                     when (requestType) {
-                        "Learn request" -> {
-                            val learnRequest = childSnapshot.getValue(learnRequest::class.java)
-                            if (learnRequest != null) {
-                                requests.add(learnRequest)
-                            }
-                        }
                         "Teach request" -> {
                             val teachRequest = childSnapshot.getValue(teachRequest::class.java)
                             val status = teachRequest?.status
-                            if (teachRequest != null && status == "Accepted") {
+                            if (teachRequest != null) {
                                 requests.add(teachRequest)
                             }
                         }
@@ -71,14 +67,13 @@ class UserRequestFragment : Fragment() {
                 // Step 4: Sort the data by publish date
                 val sortedRequests = requests.sortedByDescending { request ->
                     when (request) {
-                        is learnRequest -> request.req_date // Assuming LearnRequest has a 'publishDate' property
                         is teachRequest -> request.req_date // Assuming TeachRequest has a 'publishDate' property
                         else -> throw IllegalArgumentException("Invalid request type")
                     }
                 }//.reversed()
 
                 // Step 5: Pass the sorted list of requests to the adapter
-                val adapter = RequestsAdapter(sortedRequests)
+                val adapter = ScheduleClassAdapter(sortedRequests)
                 recyclerView.adapter = adapter
             }
 

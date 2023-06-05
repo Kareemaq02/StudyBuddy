@@ -91,8 +91,24 @@ class ScheduleClassFragment : Fragment() {
 
                 }
 
+                if (GlobalData.arrangeClassClicked) {
+                    val majorArrange = GlobalData.majorArrange
+
+                    // Iterate over the spinner items
+                    for (index in 0 until spinnerMajor.count) {
+                        val item = spinnerMajor.getItemAtPosition(index) as? String
+
+                        // Check if the item matches courseArrange
+                        if (item == majorArrange) {
+                            // Set the selected item to courseArrange
+                            spinnerMajor.setSelection(index)
+                            break
+                        }
+                    }
+                }
 
             }
+
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Handle any errors that occur
@@ -155,6 +171,8 @@ class ScheduleClassFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // Write code to perform some action
             }
+
+
         }
         val btnScheduleClass: Button = view.findViewById(R.id.btnScheduleClass)
         btnScheduleClass.setOnClickListener {
@@ -304,6 +322,45 @@ class ScheduleClassFragment : Fragment() {
 
 
         }
+
+        println(GlobalData.arrangeClassClicked)
+        println(GlobalData.courseArrange)
+        if (GlobalData.arrangeClassClicked) {
+            val courseArrange = GlobalData.courseArrange
+
+            // Iterate over the spinner items
+            for (index in 0 until spinnerCourses.count) {
+                val item = spinnerCourses.getItemAtPosition(index) as? String
+
+                // Check if the item matches courseArrange
+                if (item == courseArrange) {
+                    // Set the selected item to courseArrange
+                    spinnerCourses.setSelection(index)
+                    break
+                }
+            }
+        }
+        if(GlobalData.arrangeClassClicked)
+        {
+            val studentsNumArrange = GlobalData.studentsNumArrange
+
+            // Iterate over the spinner items
+            for (index in 0 until spinnerLimit.count) {
+                val item = spinnerLimit.getItemAtPosition(index) as? String
+
+                // Check if the item matches courseArrange
+                if (item == studentsNumArrange) {
+                    // Set the selected item to courseArrange
+                    spinnerLimit.setSelection(index)
+                    break
+                }
+            }
+
+        }
+
+
+
+
     }
     private fun getTodayDatePlusOneDay(): String {
         val cal = Calendar.getInstance()

@@ -5,4 +5,8 @@ object GlobalData {
     var savedPrerequisites: ArrayList<String> = ArrayList()
     var globalMajorId: String = ""
     var loggedInUserId: String = ""
+    var arrangeClassClicked: Boolean = false
+    var majorArrange: String = ""
+    var courseArrange: String = ""
+    var studentsNumArrange: String = ""
 }

@@ -173,11 +173,13 @@ class RequestLessonFragment : Fragment() {
             if(briefDescription!="")
             {
 
+                val arrayList = ArrayList<String>()
+                arrayList.add(GlobalData.loggedInUserId)
                 val database: FirebaseDatabase = FirebaseDatabase.getInstance()
                 val requestsRef: DatabaseReference = database.getReference("requests")
                 val newRequestRef: DatabaseReference = requestsRef.push()
                 val request = learnRequest(newRequestRef.key,majorName,courseName, reqTime,reqDate,prefStartTime,prefStartDate, GlobalData.loggedInUserId,
-                    0, briefDescription,"Learn request")
+                    1, briefDescription,"Learn request",arrayList)
                 newRequestRef.setValue(request)
 
                 val context = requireContext() // Replace with your activity or context
